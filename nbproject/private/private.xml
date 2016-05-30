@@ -2,15 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/xampp/htdocs/BP/app/presenters/templates/Competition/participation.latte</file>
-            <file>file:/C:/xampp/htdocs/BP/app/presenters/templates/Training/groups.latte</file>
-            <file>file:/C:/xampp/htdocs/BP/app/presenters/templates/Homepage/@layout.latte</file>
-            <file>file:/C:/xampp/htdocs/BP/app/model/GroupsModel.php</file>
-            <file>file:/C:/xampp/htdocs/BP/app/presenters/templates/Training/attendance.latte</file>
-            <file>file:/C:/xampp/htdocs/BP/app/presenters/templates/Training/createGroup.latte</file>
-            <file>file:/C:/xampp/htdocs/BP/app/presenters/templates/Settings/default.latte</file>
-            <file>file:/C:/xampp/htdocs/BP/app/presenters/templates/Homepage/default.latte</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
