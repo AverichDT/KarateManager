@@ -1,0 +1,66 @@
+{**
+ * @param string   $basePath web base path
+ * @param array    $flashes  flash messages
+*}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+
+        <title>{ifset title}{include title|striptags} | {/ifset}Karate</title>
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" 
+              integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" 
+              integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+        <meta name="viewport" content="width=device-width">
+        {block head}{/block}
+    </head>
+
+    <body>        
+        <div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
+        <div class="container text-center">
+        {include content}
+        </div>
+
+
+        {block scripts}
+        <!--JQuery--> 
+        <script   src="https://code.jquery.com/jquery-1.12.3.min.js"   integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ="   crossorigin="anonymous"></script>
+        <script   src="https://code.jquery.com/jquery-migrate-1.4.0.min.js"   integrity="sha256-nxdiQ4FdTm28eUNNQIJz5JodTMCF5/l32g5LwfUwZUo="   crossorigin="anonymous"></script>
+
+        <!--Nette-->
+        <script src="https://nette.github.io/resources/js/netteForms.min.js"></script>
+        <!--Bootstrap-->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" 
+                integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" 
+        crossorigin="anonymous"></script>        
+
+        <script>
+            $(function () {
+                $.nette.init();
+            });
+
+            $.datetimepicker.setLocale('cs');
+
+            $(document).ready(function () {
+                $(".datepicker").datetimepicker({
+                    timepicker: false,
+                    format: 'Y-m-d'
+                });
+
+                $(".datetimepicker").datetimepicker({
+                    format: 'Y-m-d H:i',
+                    step: 30
+                });
+
+                initializePlacesAutocomplete('placeautocomplete');
+            });
+
+
+        </script>
+        {/block}
+
+
+    </body>
+</html>

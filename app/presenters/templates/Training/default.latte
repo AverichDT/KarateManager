@@ -1,0 +1,89 @@
+{* Default training template *}
+{block sidebar-content}
+<ul class="nav nav-pills nav-stacked">
+    <li class="section-name">
+        Tréninky
+    </li>
+    <li class="active"><a n:href="Training:">Přehled</a></li>
+        {if $user->isAllowed('Training', 'manage')}
+        <li><a n:href="Training:create">Přidat</a></li>
+        <li class="section-name">Tréinkové skupiny</li>
+        <li><a n:href="Training:groups">Přehled</a></li>
+        <li><a n:href="Training:createGroup">Přidat</a></li>
+        {/if}
+</ul>
+{/block}
+
+{block content}
+{snippet trainings}
+    <h2>Tréninky {$year}/{$month}</h2>
+    {foreach $trainings as $training}
+        <hr/>
+        <div class="row training">
+            <div class="col-sm-6 border-right">
+                <h2>{$training->title} <br/>
+                    <small>{$training->place}</small>
+                </h2>
+                <table class="training-info">
+                    <tr>
+                        <td>Od:</td> <td>{$training->start_time|date: "j. n. Y H:i"}</td>
+                    </tr>
+                    <tr>
+                        <td>Do:</td> <td>{$training->end_time|date: "j. n. Y H:i"}</td>
+                    </tr>
+                    {ifset $training->min_technical_grade}
+                        <tr>
+                            <td>Minimiminální STV:</td> <td>{$presenter->getTechnicalGradeText($training->min_technical_grade)}</td>
+                        </tr>
+                    {/ifset}
+                    <tr>
+                        <td>Účastníků:</td> <td>{$presenter->getAttendingCount($training->id)}{if $training->max_attendance && $training->max_attendance != 0}/{$training->max_attendance}{/if}</td>
+                    </tr>
+                </table>
+                <div class="control-buttons">
+                    {if $presenter->isUserAttending($training->id)}
+                        <a n:href="unsignMyself! $training->id, $year, $month" class="ajax"><button class="btn btn-sm btn-sharp btn-danger">Odhlásit se</button></a>
+                        {ifset $training->series_id}
+                            <a n:href="unsignMyself! $training->id, $year, $month, $training->series_id" class="ajax"><button class="btn btn-sm btn-sharp btn-danger">Odhlásit se od série</button></a>
+                        {/ifset}
+                    {else}
+                        <a n:href="signMyself! $training->id, $year, $month" class="ajax"><button class="btn btn-sm btn-sharp btn-success">Přihlásit se</button></a>
+                            {ifset $training->series_id} 
+                                <a n:href="signMyself! $training->id, $year, $month, $training->series_id" class="ajax"><button class="btn btn-sm btn-sharp btn-success">Přihlásit se k sérii</button></a>
+                            {/ifset}
+
+                        {/if}
+                        {if $user->isInRole('trainer') || $user->isInRole('coach') || $user->isInRole('admin')}
+                            <a n:href="Training:attendance $training->id"><button class="btn btn-sm btn-sharp btn-primary">Účastníci</button></a>
+                            <a n:href="delete! $training->id, $year, $month" class="ajax"><button class="btn btn-sm btn-sharp btn-danger">Vymazat</button></a>
+                            {ifset $training->series_id}
+                                <a n:href="delete! $training->id, $year, $month, $training->series_id"><button class="btn btn-sm btn-sharp btn-danger">Vymazat sérii</button></a>
+                            {/ifset}
+                        {/if}
+                </div>
+            </div>
+            <div class="col-sm-6">
+                {if isset($training->description) && $training->description != ""}
+                    <p>{$training->description}</p>
+                {else}
+                    <p><i>Žádný popisek</i></p>
+                {/if}
+            </div>
+        </div>
+    {/foreach}
+    <!--PAGING-->
+    <nav>
+        <ul class="pager">
+            <li class="previous">
+                <a n:href="previousMonth! $year, $month" class="ajax">
+                    <span aria-hidden="true">&larr;</span> {if $month == 1}rok {$year - 1}{else}{$month - 1}. měsíc{/if}
+                </a>
+            </li>
+            <li class="next">
+                <a n:href="nextMonth! $year, $month" class="ajax">{if $month == 12}rok {$year + 1}{else}{$month + 1}. měsíc{/if}
+                    <span aria-hidden="true">&rarr;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+{/snippet}

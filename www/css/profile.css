@@ -1,0 +1,9 @@
+.attendingEvents hr{
+    width: 80%;
+}
+
+#head-row .col-heading{
+    margin-top: 0px;
+    font-size: 1.4em;
+    font-weight: 500;    
+}

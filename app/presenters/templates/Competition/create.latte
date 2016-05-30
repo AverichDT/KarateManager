@@ -1,0 +1,22 @@
+{* Competition create template *}
+{block sidebar-content}
+<ul class="nav nav-pills nav-stacked">
+    <li class="section-name">
+        Soutěže
+    </li>
+    <li><a n:href="Competition:">Přehled</a></li>
+        {if $user->isAllowed('Competition','manage')}
+        <li class="active"><a n:href="Competition:create">Přidat</a></li>
+        <li class="section-name">
+            Soutěžní skupiny
+        </li>
+        <li><a n:href="Competition:groups">Přehled</a></li>
+        <li><a n:href="Competition:createGroup">Přidat</a><li>
+        {/if}
+</ul>
+{/block}
+
+{block content}
+<h2>Přidat novou soutěž</h2>
+
+{control createCompetitionForm}

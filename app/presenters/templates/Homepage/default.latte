@@ -1,0 +1,310 @@
+<!--Homepage content-->
+{block content}
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>                        
+            </button>
+            <a class="navbar-brand" href="#myPage">KarateClub</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a class="local-link" href="#about">O NÁS</a></li>
+                <li><a class="local-link" href="#trainings">TRÉNINKY</a></li>
+                <li><a class="local-link" href="#trainers-team">TÝM TRENÉRŮ</a></li>
+                <li><a class="local-link" href="#pricing">CENY ČLENSTVÍ</a></li>
+                <li><a class="local-link" href="#contact">KONTAKT</a></li>
+                    {if $user->isLoggedIn()}
+                    <li><a n:href="Profile: $user->id"><span class="glyphicon glyphicon-user"></span> MŮJ PROFIL</a></li>
+                    {else}
+                    <li><a href="#" data-toggle="modal" data-target="#loginModal"><span class="glyphicon glyphicon-log-in"></span> PŘIHLÁŠENÍ</a></li>
+                    {/if}
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Login Modal -->
+<div id="loginModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Přihlášení do systému</h4>
+            </div>
+            <div class="modal-body">
+                {form signInForm}
+                    <div class="row">
+                        <div class="col-sm-6">{label username /}
+                        </div>                        
+                        <div class="col-sm-6">
+                            {input username class => form-control}
+                        </div>
+                    </div>   
+                    <div class="row">
+                        <div class="col-sm-6">{label password /}
+                        </div>                        
+                        <div class="col-sm-6">
+                            {input password class => form-control}
+                        </div>
+                    </div>   
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="checkbox">
+                                <label>
+                                    {input remember} {label remember /}
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            {input send class => 'btn blue'}
+                        </div>
+                    </div>
+                {/form}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="jumbotron text-center">
+    <h1>KarateClub</h1> 
+    <p>Sportovní Goju-ryu karate</p> 
+    <form class="form-inline">
+        <input type="email" class="form-control" size="50" placeholder="Emailová adresa" required>
+        <button type="button" class="btn btn-danger">Odebirát novinky</button>
+    </form>
+</div>
+
+<!-- Container (About Section) -->
+<div id="about" class="container-fluid">
+    <div class="row">
+        <div class="col-sm-8">
+            <h2>O našem klubu</h2><br>
+            <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</h4><br>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <br><a id="contactUs" href="#contact"><button class="btn btn-default btn-lg">Ozvěte se nám</button></a>
+        </div>
+        <div class="col-sm-4">
+            <img src="{$basePath}/images/karate-fist.jpg" alt="Karate - japan text"/>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid bg-grey">
+    <div class="row">
+        <div class="col-sm-4">
+            <span class="glyphicon glyphicon-globe logo slideanim"></span>
+        </div>
+        <div class="col-sm-8">
+            <h2>Hodnoty klubu</h2><br>
+            <h4><strong>CÍLE:</strong> Našimi cíly lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</h4><br>
+            <p><strong>VIZE:</strong> Naší vizí Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Container (Services Section) -->
+<div id="trainings" class="container-fluid text-center">
+    <h2>Tréninky</h2>
+    <h4>Co Vám nabídnou naše tréninky</h4>
+    <br>
+    <div class="row slideanim">
+        <div class="col-sm-4">
+            <span class="glyphicon glyphicon-leaf logo-small"></span>
+            <h4>OUTDOOROVÉ AKTIVITY</h4>
+            <p>Lorem ipsum dolor sit amet..</p>
+        </div>
+        <div class="col-sm-4">
+            <span class="glyphicon glyphicon-heart logo-small"></span>
+            <h4>ZDRAVÝ ŽIVOTNÍ STYL</h4>
+            <p>Lorem ipsum dolor sit amet..</p>
+        </div>
+        <div class="col-sm-4">
+            <span class="glyphicon glyphicon-scale logo-small"></span>
+            <h4>FYZICKÁ KONDICE</h4>
+            <p>Lorem ipsum dolor sit amet..</p>
+        </div>
+    </div>
+    <br><br>
+    <div class="row slideanim">
+        <div class="col-sm-4 col-sm-offset-2">
+            <span class="glyphicon glyphicon-certificate logo-small"></span>
+            <h4>CERTIFIKOVANÍ TRENÉŘI</h4>
+            <p>Lorem ipsum dolor sit amet..</p>
+        </div>
+        <div class="col-sm-4">
+            <span class="glyphicon glyphicon-user logo-small"></span>
+            <h4>OSOBNÍ PŘÍSTUP</h4>
+            <p>Lorem ipsum dolor sit amet..</p>
+        </div>
+    </div>
+</div>
+
+<!-- Container (Portfolio Section) -->
+<div id="trainers-team" class="container-fluid text-center bg-grey">
+    <h2>Tým trenérů</h2><br>
+    <h4>Naši certifikovaní trenéři</h4>
+    <div class="row text-center slideanim">
+        <div class="col-sm-4">
+            <div class="thumbnail">
+                <img src="{$basePath}/images/profile_man.png" alt="Jan Nový">
+                <p><strong>Jan Nový</strong></p>
+                <p>Trenér 1. třídy, 4. dan</p>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="thumbnail">
+                <img src="{$basePath}/images/profile_woman.png" alt="Petra Nováková">
+                <p><strong>Petra Nováková</strong></p>
+                <p>Trenérka 2. třídy, 1. dan</p>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="thumbnail">
+                <img src="{$basePath}/images/profile_man.png" alt="Petr Silný">
+                <p><strong>Petr Silný</strong></p>
+                <p>Trenér 2. třídy, 2. dan</p>
+            </div>
+        </div>
+    </div><br>
+
+    <h2>Říkají o nás: </h2>
+    <div id="myCarousel" class="carousel slide text-center" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+            <div class="item active">
+                <h4>"Závodníci z KarateClub dominovali na mezinárodní soutěži!"<br><span style="font-style:normal;">Deník Lorem Ipsum</span></h4>
+            </div>
+            <div class="item">
+                <h4>"KarateClub inovuje sportovní karate."<br><span style="font-style:normal;">Sportovní portál Lorem Ipsum</span></h4>
+            </div>
+            <div class="item">
+                <h4>"Je to pro mne jako druhý domov."<br><span style="font-style:normal;">Peter Member, člen klubu</span></h4>
+            </div>
+        </div>
+
+        <!-- Left and right controls -->
+        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</div>
+
+<!-- Container (Pricing Section) -->
+<div id="pricing" class="container-fluid">
+    <div class="text-center">
+        <h2>Ceny členství</h2>
+        <h4>Způsoby placení členství</h4>
+    </div>
+    <div class="row slideanim">
+        <div class="col-sm-4 col-xs-12">
+            <div class="panel panel-default text-center">
+                <div class="panel-heading">
+                    <h1>Měsíční</h1>
+                </div>
+                <div class="panel-body">
+                    <p><strong>20</strong> Lorem</p>
+                    <p><strong>15</strong> Ipsum</p>
+                    <p><strong>5</strong> Dolor</p>
+                    <p><strong>2</strong> Sit</p>
+                    <p><strong>Endless</strong> Amet</p>
+                </div>
+                <div class="panel-footer">
+                    <h3>400 Kč</h3>
+                    <h4>měsíčně</h4>
+                </div>
+            </div>      
+        </div>     
+        <div class="col-sm-4 col-xs-12">
+            <div class="panel panel-default text-center">
+                <div class="panel-heading">
+                    <h1>Čtvrtletní</h1>
+                </div>
+                <div class="panel-body">
+                    <p><strong>50</strong> Lorem</p>
+                    <p><strong>25</strong> Ipsum</p>
+                    <p><strong>10</strong> Dolor</p>
+                    <p><strong>5</strong> Sit</p>
+                    <p><strong>Endless</strong> Amet</p>
+                </div>
+                <div class="panel-footer">
+                    <h3>1 000 Kč</h3>
+                    <h4>čtvrtletně</h4>
+                </div>
+            </div>      
+        </div>       
+        <div class="col-sm-4 col-xs-12">
+            <div class="panel panel-default text-center">
+                <div class="panel-heading">
+                    <h1>Roční</h1>
+                </div>
+                <div class="panel-body">
+                    <p><strong>100</strong> Lorem</p>
+                    <p><strong>50</strong> Ipsum</p>
+                    <p><strong>25</strong> Dolor</p>
+                    <p><strong>10</strong> Sit</p>
+                    <p><strong>Endless</strong> Amet</p>
+                </div>
+                <div class="panel-footer">
+                    <h3>2 800 Kč</h3>
+                    <h4>ročně</h4>
+                </div>
+            </div>      
+        </div>    
+    </div>
+</div>
+
+<!-- Container (Contact Section) -->
+<div id="contact" class="container-fluid bg-grey">
+    <h2 class="text-center">Kontakt</h2>
+    <div class="row">
+        <div class="col-sm-5">
+            <p>Kontaktujte nás a my se Vám během 24 hodin ozveme zpět.</p>
+            <p><span class="glyphicon glyphicon-map-marker"></span> Třinec, Moravskoslezský Kraj</p>
+            <p><span class="glyphicon glyphicon-phone"></span> +420 606606606</p>
+            <p><span class="glyphicon glyphicon-envelope"></span> kontakt@karateclub.cz</p>	   
+        </div>
+        <div class="col-sm-7 slideanim">
+            <div class="row">
+                <div class="col-sm-6 form-group">
+                    <input class="form-control" id="name" name="name" placeholder="Jméno" type="text" required>
+                </div>
+                <div class="col-sm-6 form-group">
+                    <input class="form-control" id="email" name="email" placeholder="Email" type="email" required>
+                </div>
+            </div>
+            <textarea class="form-control" id="comments" name="comments" placeholder="Váš vzkaz" rows="5"></textarea><br>
+            <div class="row">
+                <div class="col-sm-12 form-group">
+                    <button class="btn btn-default pull-right" type="submit">Odeslat</button>
+                </div>
+            </div>	
+        </div>
+    </div>
+</div>
+
+<div id="googleMap" style="height:500px;width:100%;"></div>
+
+<footer class="container-fluid text-center">
+    <a href="#myPage" title="To Top">
+        <span class="glyphicon glyphicon-chevron-up"></span>
+    </a>		
+</footer>

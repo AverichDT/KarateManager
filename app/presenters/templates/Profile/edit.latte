@@ -1,0 +1,34 @@
+{* Latte template *}
+{block sidebar-content}
+<ul class="nav nav-pills nav-stacked">
+    <li class="section-name">
+        Profil
+    </li>    
+    <li><a n:href="Profile: $member->id">Přehled</a></li>
+    <li class="active"><a n:href="edit $member->id">Editovat profil</a></li>
+</ul>
+{/block}
+
+{block content}
+<h2 class="btm-margin">Úprava údajů</h2>
+<div class="row">
+    <div class="col-sm-6">
+        {control editMemberForm}
+    </div>
+    <div class="col-sm-6">
+        {if in_array('competitor', $roles)}
+            {control editCompetitorForm}
+        {/if}
+        {if in_array('trainer', $roles)}
+            {control editTrainerForm}
+        {/if}
+        {if in_array('coach', $roles)}
+            {control editCoachForm}
+        {/if}
+        <div class="row">
+            <div class="col-sm-12">
+
+            </div>
+        </div>
+    </div>
+</div>

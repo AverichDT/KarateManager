@@ -1,0 +1,13 @@
+{* Latte template *}
+{block sidebar-content}
+<ul class="nav nav-pills nav-stacked">
+    <li class="section-name">
+        Nastavení
+    </li>    
+    <li class="active"><a n:href="Settings: $id">Změna hesla</a></li>
+</ul>
+{/block}
+
+{block content}
+<h2>Změna hesla</h2>
+{control changePasswordForm}

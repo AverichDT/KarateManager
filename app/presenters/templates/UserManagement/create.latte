@@ -1,0 +1,17 @@
+{* Latte template *}
+{block sidebar-content}
+<ul class="nav nav-pills nav-stacked">
+    <li class="section-name">
+        Administrace
+    </li>
+    <li><a n:href="UserManagement:">Přehled</a></li>
+    <li class="active"><a n:href="UserManagement:create">Přidat</a></li>
+    
+</ul>
+{/block}
+
+{block content}
+<div class="row">
+    <h1>Vytvořit nového uživatele</h1>
+</div>
+{control createMemberForm}

@@ -1,0 +1,179 @@
+html, body{
+    height: 100%;
+    width: 100%;
+}
+
+#ajax-spinner {
+    position:fixed;
+    left: 48%;
+    top: 40%;
+    background: url('../images/spinner.gif') no-repeat 50% 50%;
+    padding: 25px;
+    font-size: 0;
+}
+
+div.flash {
+    color: black;
+    background: #FFF9D7;
+    border: 1px solid #E2C822;
+    padding: 1em;
+    margin: 1em 0;
+}
+
+a[href^="#error:"] {
+    background: red;
+    color: white;
+}
+
+form th, form td {
+    vertical-align: top;
+    font-weight: normal;
+}
+
+form th {
+    text-align: right;
+}
+
+form .required label {
+    font-weight: bold;
+}
+
+form .error {
+    color: #D00;
+    font-weight: bold;
+}
+
+form .form-control{
+    width: 50%;
+}
+
+form fieldset legend{
+    width: 80%;
+}
+
+/* Remove the navbar's default margin-bottom and rounded borders */ 
+.navbar {
+    margin-bottom: 0;
+    border-radius: 0;
+}
+
+/* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+.body-content {
+    height: 90%;
+}
+
+.content-row{
+    height: 100%;
+}
+
+.content{
+    height: 100%;
+    overflow:auto;  
+}
+
+/* Set gray background color and 100% height */
+.sidenav {
+    padding-top: 20px;
+    background-color: #f1f1f1;
+    height: 100%;
+}
+
+.sidenav .well{
+    background-image: none;
+    background-color:#4d78e9;
+    height: 15%;
+    color: #fff;
+}
+
+#sidebar-wrapper{
+    padding: 0px;
+}
+
+#sidebar-wrapper .section-name{
+    font-size: 1.5em;
+    font-weight: 400;
+    margin: 10px 0px;
+}
+
+/* Set black background color, white text and some padding */
+footer {
+    background-color: #222;
+    color: #9d9d9d;
+    padding: 15px;
+}
+
+footer a{
+    display: inline-block;
+    padding: 0px 15px;
+
+    color:#9d9d9d;
+}
+
+footer a + a{
+    border-left: 1px solid white;
+}
+
+footer a:hover{
+    color: white;
+}
+
+/* On small screens, set height to 'auto' for sidenav and grid */
+@media screen and (max-width: 767px) {
+    .sidenav {
+        height: auto;
+        padding: 15px;
+    }
+    .body-content {height:auto;} 
+}
+
+.nav-pills>li.active>a{
+    border-radius: 0px;
+}
+
+#sidebar-wrapper .nav>li>a:hover{
+    background-color: #ccc;
+    color: black;
+}
+
+.nav-pills.nav-sharp > li{
+    margin-left: 0px;
+    border-left: 1px solid #eee;
+    border-right: 1px solid #eee;
+}
+
+button.btn-sharp{
+    border-radius: 0px;
+    border: none;
+}
+
+.border-right{
+    border-right: 1px solid #eee;
+}
+
+.control-buttons > a{
+    display: inline-block;
+    margin-top: 10px;
+}
+.control-buttons a{
+    margin-left: 10px;
+}
+
+.red {
+    color: #d9534f;
+}
+
+.red:hover{
+    color: #b30000;
+}
+
+td.action{
+    width: 3em;
+}
+
+.no-margin{
+    margin: 0px;
+}
+
+.border-right > li{
+    border-right: 1px solid #eee;
+}

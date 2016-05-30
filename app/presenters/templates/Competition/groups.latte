@@ -1,0 +1,106 @@
+{* Competitors group template *}
+
+{block sidebar-content}
+<ul class="nav nav-pills nav-stacked">
+    <li class="section-name">
+        Soutěže
+    </li>
+    <li><a n:href="Competition:">Přehled</a></li>
+        {if $user->isAllowed('Competition','manage')}
+        <li><a n:href="Competition:create">Přidat</a></li>
+        <li class="section-name">
+            Soutěžní skupiny
+        </li>
+        <li class="active"><a n:href="Competition:groups">Přehled</a></li>
+        <li><a n:href="Competition:createGroup">Přidat</a><li>
+        {/if}
+</ul>
+{/block}
+
+{block content}
+<h2>Přehled soutěžních skupin</h2>
+<!--<hr class="no-margin hr-black" />-->
+{if $groups}
+    {snippet groups}
+        <ul id="groupsBar" class="nav nav-ajax nav-pills nav-sharp">
+            {foreach $groups as $group}
+                <li>
+                    <a n:href="selectGroup! $group->id" class="ajax">{$group->name}</a>
+                </li>
+            {/foreach}
+        </ul>
+    {/snippet}
+{else}
+    <p>
+        <i>Neexistují žádné soutěžní skupiny. Pro práci s nimi nejprve nějakou skupinu <a n:href="Competition:createGroup">přidejte</a>.</i>
+    </p>
+{/if}
+<!--<hr class="no-margin hr-black" />-->
+
+{snippet selectedGroup}
+    {ifset $selectedGroup}
+        <div class="row group-detail">
+            <div class='border-right col-sm-4'>
+                <h3>{$selectedGroup->name}
+                    {ifset $selectedGroup->performance_grade}
+                        </br>
+                        <small>skupina {$selectedGroup->performance_grade}.třídy</small>
+                    {/ifset}
+                </h3>
+                <div class='control-buttons'>
+                    <a n:href='Competition:editGroup $selectedGroup->id'><button class="btn btn-sm btn-sharp btn-primary">Editovat</button></a>
+                    <a n:href='deleteGroup! $selectedGroup->id' class='ajax'><button class="btn btn-sm btn-sharp btn-danger">Vymazat</button></a>
+                </div>
+            </div>
+            <div class='col-sm-6'>
+                <p class="group-description">{$selectedGroup->description}</p>
+            </div>
+        </div>
+    {/ifset}
+{/snippet}
+
+
+{snippet competitorsTable}
+
+    {ifset $selectedGroup}
+        <h3>Členové skupiny:</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Jméno</th>
+                    <th>Příjmení</th>
+                    <th>Věk</th>
+                    <th>Váha</th>
+                    <th>Kategorie</th>
+                    <th>Výkon. třída</th>
+                    <th>Akce</th>
+                </tr>
+            </thead>
+            <tbody>
+                {foreach $members as $competitor}
+                    <tr class="success">
+                        <td>{$competitor->firstname}</td>
+                        <td>{$competitor->surname}</td>
+                        <td>{$presenter->getAge($competitor->birthdate)}</td>
+                        <td>{$competitor->weight} kg</td>
+                        <td>{$presenter->getCompetitorCategory($competitor)}</td>
+                        <td>{ifset $competitor->performance_grade}{$competitor->performance_grade}. třída {else} - {/ifset}</td>
+                        <td><a n:href="removeFromGroup! $competitor->id, $selectedGroup->id" class="ajax"><button class="btn btn-sm btn-sharp btn-primary">Odebrat ze skupiny</button></a></td>
+                    </tr>
+                {/foreach}
+                {foreach $nonMembers as $competitor}
+                    <tr class="danger">
+                        <td>{$competitor->firstname}</td>
+                        <td>{$competitor->surname}</td>
+                        <td>{$presenter->getAge($competitor->birthdate)}</td>
+                        <td>{$competitor->weight} kg</td>
+                        <td>{$presenter->getCompetitorCategory($competitor)}</td>
+                        <td>{ifset $competitor->performance_grade}{$competitor->performance_grade}. třída {else} - {/ifset}</td>
+                        <td><a n:href="addToGroup! $competitor->id, $selectedGroup->id" class="ajax"><button class="btn btn-sm btn-sharp btn-primary">Přidat do skupiny</button></a></td>
+                    </tr>
+                {/foreach}
+            </tbody>
+        </table>
+
+    {/ifset}
+{/snippet}

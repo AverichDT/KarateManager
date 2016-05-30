@@ -1,0 +1,126 @@
+{* Latte template *}
+{block sidebar-content}
+<ul class="nav nav-pills nav-stacked">
+    <li class="section-name">
+        Profil
+    </li>    
+    <li class="active"><a n:href="Profile: $member->id">Přehled</a></li>
+    <li><a n:href="edit $member->id">Editovat profil</a></li>
+</ul>
+{/block}
+
+
+{block content}
+<div class="row">
+    <div class="col-sm-2">
+        {if $member->gender == 'F'}
+            <img class="img" width="100%" height="100%" src="{$basePath}/images/profile_woman.png"/>        
+        {else}
+            <img class="img" width="100%" height="100%" src="{$basePath}/images/profile_man.png"/>    
+        {/if}
+    </div>
+    <div class="col-sm-10">
+        <div class="row">
+            <div class="row-sm-12">
+                <h1>{$member->firstname}{ifset $member->midname} {$member->midname}{/ifset} {$member->surname} 
+                    <small>{$age} let</small>
+                </h1>
+            </div>
+        </div>
+        <div class="row" id="head-row">
+            <div class="col-sm-4">
+                <h3 class="user-roles col-heading">
+                    {if $member}člen {/if}
+                    {if $competitor}závodník {/if}
+                    {if $trainer}trenér {/if}
+                    {if $coach}kouč {/if}
+                </h3>
+                <p>{$technicalGrade}</p>
+            </div>
+            {if $competitor}
+                <div class="col-sm-4">
+                    <h3 class="col-heading">
+                        {$category}
+                    </h3>
+                    <p>
+                        váha: {$competitor->weight} kg </br>
+                        výška: {$competitor->height} cm 
+                    </p>
+                </div>
+            {/if}
+
+            {if $trainer}
+                <div class="col-sm-4">
+                    <h3 class="col-heading">
+                        Trenér {$trainer->trainer_grade}. třídy
+                    </h3>
+                    <p>
+                        začátek licence: {$trainer->licence_start |date: "d. m. Y"}</br>
+                        konec licence: {$trainer->licence_end |date: "d. m. Y"}
+                    </p>
+                </div>
+            {/if}
+        </div>
+
+    </div>
+</div>
+
+<hr>
+{snippet attendingEvents}
+    <div class="row attendingEvents text-center">
+        <h2>Tréninky a soutěže <small>{$month}/{$year}</small></h2>
+        <div class="col-sm-6 text-center">
+            {foreach $trainings as $training}
+                <div class="row training-row">
+                    <div class="col-sm-12">
+                        <h3>{$training->title} <br/>
+                            <small>{$training->place}</small>
+                        </h3>
+                        <p>{$training->start_time|date:'j. n. H:i'} - {$training->end_time|date:'j. n. H:i'}</p>
+                        <hr/>
+                    </div>
+                </div>
+            {/foreach}
+        </div>
+        <div class="col-sm-6 text-center">
+            {foreach $competitions as $competition}
+                <div class="row training-row">
+                    <div class="col-sm-12">
+                        <h3>{$competition->title} <br/>
+                            <small>{$competition->place}</small>
+                        </h3>
+                        <p>{$competition->start_time|date:'j. n. H:i'} - {$competition->end_time|date:'j. n. H:i'}</p>
+                        <hr/>
+                    </div>
+                </div>
+            {/foreach}
+        </div>
+    </div>
+
+    <nav>
+        <ul class="pager">
+            <li class="previous">
+                {if $competitor}
+                    <a n:href="previousMonth! $year, $month, $member->id, $competitor->id" class="ajax">
+                        <span aria-hidden="true">&larr;</span> {if $month == 1}rok {$year - 1}{else}{$month - 1}. měsíc{/if}
+                    </a>
+                {else}
+                    <a n:href="previousMonth! $year, $month, $member->id" class="ajax">
+                        <span aria-hidden="true">&larr;</span> {if $month == 1}rok {$year - 1}{else}{$month - 1}. měsíc{/if}
+                    </a>
+                {/if}
+            </li>
+            <li class="next">
+                {if $competitor}
+                    <a n:href="nextMonth! $year, $month, $member->id, $competitor->id" class="ajax">{if $month == 12}rok {$year + 1}{else}{$month + 1}. měsíc{/if}
+                        <span aria-hidden="true">&rarr;</span>
+                    </a>
+                {else}
+                    <a n:href="nextMonth! $year, $month, $member->id" class="ajax">{if $month == 12}rok {$year + 1}{else}{$month + 1}. měsíc{/if}
+                        <span aria-hidden="true">&rarr;</span>
+                    </a>
+                {/if}
+            </li>
+        </ul>
+    </nav>
+{/snippet}

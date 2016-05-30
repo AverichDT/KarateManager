@@ -1,0 +1,96 @@
+{block sidebar-content}
+<ul class="nav nav-pills nav-stacked">
+    <li class="section-name">
+        Tréninky
+    </li>
+    <li><a n:href="Training:">Přehled</a></li>
+        {if $user->isAllowed('Training', 'manage')}
+        <li><a n:href="Training:create">Přidat</a></li>
+        <li class="active"><a n:href="Training:attendance $training->id">Účastníci</a></li>
+        <li class="section-name">Tréinkové skupiny</li>
+        <li><a n:href="Training:groups">Přehled</a></li>
+        <li><a n:href="Training:createGroup">Přidat</a></li>
+        {/if}
+</ul>
+{/block}
+
+{block content}
+
+<h2>{$training->title} </br>
+    <small>{$training->place}</small>
+</h2>
+
+{if $trainingGroups}
+    <ul class="nav nav-ajax nav-pills nav-sharp">
+        <li class="active">
+            <a n:href="hideGroup!" class="ajax">Všichni členové</a>
+        </li>
+        {foreach $trainingGroups as $tg}
+            <li>
+                <a n:href="showGroup! $tg->id, $training->id" class="ajax">{$tg->name}</a>
+            </li>
+        {/foreach}
+    </ul>
+{else}
+    <p>
+        <i>Neexistují žádné soutěžní skupiny pro kategorizaci závodníků. Můžete nějakou skupinu <a n:href="Training:createGroup">přidat</a>.</i>
+    </p>
+{/if}
+
+{snippet attendanceTable}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Jméno</th>
+                <th>Příjmení</th>
+                <th>Věk</th>
+                <th>STV</th>
+                    {ifset $training->series_id}
+                    <th colspan="2">Akce</th>
+                    {else}
+                    <th>Akce</th>
+                    {/ifset}
+            </tr>
+        </thead>
+        <tbody>
+            {foreach $attendants as $member}
+                <tr class="success">
+                    <td>{$member->firstname}</td>
+                    <td>{$member->surname}</td>
+                    <td>{$presenter->getAge($member->birthdate)}</td>
+                    <td>{$presenter->getTechnicalGradeText($member->technical_grade)}</td>
+                    {ifset $selectedGroup}
+                        <td><a n:href="unSign! $member->id, $training->id, $selectedGroup->id" class="ajax"><button class="btn btn-sm btn-sharp btn-primary">Odhlásit</button></a></td>
+                    {else}
+                        <td><a n:href="unSign! $member->id, $training->id" class="ajax"><button class="btn btn-sm btn-sharp btn-primary">Odhlásit</button></a></td>
+                    {/ifset}
+                </tr>
+            {/foreach}            
+            {foreach $nonAttendants as $member}
+                <tr class="danger">
+                    <td>{$member->firstname}</td>
+                    <td>{$member->surname}</td>
+                    <td>{$presenter->getAge($member->birthdate)}</td>
+                    <td>{$presenter->getTechnicalGradeText($member->technical_grade)}</td>
+                    {ifset $selectedGroup}
+                        <td><a n:href="signUp! $member->id, $training->id, $selectedGroup->id" class="ajax"><button class="btn btn-sm btn-sharp btn-primary">Přihlásit</button></a></td>
+                    {else}
+                        <td><a n:href="signUp! $member->id, $training->id" class="ajax"><button class="btn btn-sm btn-sharp btn-primary">Přihlásit</button></a></td>
+                    {/ifset}
+                </tr>
+            {/foreach}
+        </tbody>
+    </table>
+
+    {ifset $selectedGroup}
+        <div class='control-buttons'>
+            <a n:href='groupSignUp! $selectedGroup->id, $training->id' class='ajax'><button class="btn btn-sm btn-sharp btn-primary">Přihlásit skupinu</button></a>
+            <a n:href='groupUnSign! $selectedGroup->id, $training->id' class='ajax'><button class="btn btn-sm btn-sharp btn-danger">Odhlásit skupinu</button></a>
+            {ifset $training->series_id}
+                <a n:href='groupSignUp! $selectedGroup->id, $training->id, $training->series_id' class='ajax'><button class="btn btn-sm btn-sharp btn-primary">Přihlásit skupinu k sérii</button></a>
+                <a n:href='groupUnSign! $selectedGroup->id, $training->id, $training->series_id' class='ajax'><button class="btn btn-sm btn-sharp btn-danger">Odhlásit skupinu od série</button></a>
+            {/ifset}
+        </div>
+    {/ifset}
+{/snippet}
+

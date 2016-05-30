@@ -1,0 +1,142 @@
+{* Latte template *}
+{block sidebar-content}
+<ul class="nav nav-pills nav-stacked">
+    <li class="section-name">
+        Administrace
+    </li>
+    <li class="active"><a n:href="UserManagement:">Přehled</a></li>
+    <li><a n:href="UserManagement:create">Přidat</a></li>
+</ul>
+{/block}
+
+{block content}
+<div class="row">
+    <div class="col-sm-12">
+        <h1 n:block="title">Přehled členů</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <ul class="nav nav-pills nav-sharp">
+            <li class="active"><a data-toggle="tab" href="#members">Členové</a></li>
+            <li><a data-toggle="tab" href="#competitors">Závodníci</a></li>
+            <li><a data-toggle="tab" href="#trainers">Trenéři</a></li>
+            <li><a data-toggle="tab" href="#coaches">Koučové</a></li>
+        </ul>
+        {snippet memberTables}
+
+            <div class="tab-content">
+                <div id="members" class="tab-pane fade in active">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Jméno</th>
+                                <th>Příjmení</th>
+                                <th>Věk</th>
+                                <th>STV</th>
+                                <th>Členem od</th>
+                                <th colspan="3">Akce</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {foreach $members as $member}
+                                <tr>
+                                    <td>{$member->firstname}</td>
+                                    <td>{$member->surname}</td>                            
+                                    <td>{$presenter->getAge($member->birthdate)}</td>                            
+                                    <td>{$presenter->getTechnicalGradeText($member->technical_grade)}</td>                            
+                                    <td>{$member->member_since |date: 'd. m. Y'}</td>                            
+                                    <td class="action"><a n:href="Profile:default $member->id"><span class="glyphicon glyphicon-user"></span></a></td>
+                                    <td class="action"><a n:href="Profile:edit $member->id"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                                    <td class="action"><a class="ajax" n:href="delete! $member->id"><span class="glyphicon glyphicon-trash red"></span></a></td>
+                                </tr>
+                            {/foreach}
+                        </tbody>
+                    </table>
+                </div>
+                <div id="competitors" class="tab-pane fade">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Jméno</th>
+                                <th>Příjmení</th>
+                                <th>STV</th>
+                                <th>Kategorie</th>
+                                <th>Výkon. třída</th>
+                                <th colspan="3">Akce</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {foreach $competitors as $competitor}
+                                <tr>
+                                    <td>{$competitor->firstname}</td>
+                                    <td>{$competitor->surname}</td>                            
+                                    <td>{$presenter->getTechnicalGradeText($competitor->technical_grade)}</td>                            
+                                    <td>{$presenter->getCompetitorCategory($competitor)}</td>                            
+                                    <td>{$competitor->performance_grade}. třída</td>                            
+                                    <td class="action"><a n:href="Profile:default $competitor->members_id"><span class="glyphicon glyphicon-user"></span></a></td>
+                                    <td class="action"><a n:href="Profile:edit $competitor->members_id"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                                    <td class="action"><a class="ajax" n:href="delete! $competitor->members_id"><span class="glyphicon glyphicon-trash red"></span></a></td>
+                                </tr>
+                            {/foreach}
+                        </tbody>
+                    </table>
+                </div>
+                <div id="trainers" class="tab-pane fade">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Jméno</th>
+                                <th>Příjmení</th>
+                                <th>Trenérská třída</th>
+                                <th>Licence od</th>
+                                <th>Licence do</th>
+                                <th colspan="3">Akce</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {foreach $trainers as $trainer}
+                                <tr>
+                                    <td>{$trainer->firstname}</td>
+                                    <td>{$trainer->surname}</td>                            
+                                    <td>{$trainer->trainer_grade}. třída</td>                            
+                                    <td>{$trainer->licence_start|date: "d. m. Y"}</td>                            
+                                    <td>{$trainer->licence_end|date:'d. m. Y'}</td>                            
+                                    <td class="action"><a n:href="Profile:default $trainer->members_id"><span class="glyphicon glyphicon-user"></span></a></td>
+                                    <td class="action"><a n:href="Profile:edit $trainer->members_id"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                                    <td class="action"><a class="ajax" n:href="delete! $trainer->members_id"><span class="glyphicon glyphicon-trash red"></span></a></td>
+                                </tr>
+                            {/foreach}
+                        </tbody>
+                    </table>
+                </div>
+                <div id="coaches" class="tab-pane fade">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Jméno</th>
+                                <th>Příjmení</th>
+                                <th>Třída</th>
+                                <th>Specializace</th>
+                                <th colspan="3">Akce</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {foreach $coaches as $coach}
+                                <tr>
+                                    <td>{$coach->firstname}</td>
+                                    <td>{$coach->surname}</td>                            
+                                    <td>{ifset $coach->coach_grade}{$coach->coach_grade}. třída {else} - {/ifset}</td>                            
+                                    <td>{ifset $coach->specialization}{$presenter->getSpecializationText($coach->specialization)}{else} - {/ifset}</td>                    
+                                    <td class="action"><a n:href="Profile:default $coach->members_id"><span class="glyphicon glyphicon-user"></span></a></td>
+                                    <td class="action"><a n:href="Profile:edit $coach->members_id"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                                    <td class="action"><a class="ajax" n:href="delete! $coach->members_id"><span class="glyphicon glyphicon-trash red"></span></a></td>
+                                </tr>
+                            {/foreach}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        {/snippet}
+    </div>
+</div>

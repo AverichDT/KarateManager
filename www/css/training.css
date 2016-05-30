@@ -1,0 +1,19 @@
+.group-detail{
+    margin-top: 20px;
+}
+
+.group-detail h3{
+    margin: 0px;
+}
+
+.competition h2{
+    margin-top: 0px;
+}
+
+table.training-info td + td{
+    padding-left: 15px;
+}
+
+table.training-info tr td:first-child{
+    font-weight: 600;
+}

@@ -1,0 +1,39 @@
+{* Latte template *}
+
+{block menu}
+
+<nav id="menu" class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menuNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span> 
+            </button>
+            <a class="navbar-brand" href="#">KarateManager</a>
+        </div>
+        <div class="collapse navbar-collapse" id="menuNavbar">
+            <ul class="nav navbar-nav">
+                {block menu-left}
+                {if !$user->isInRole('admin')}
+                    <li>
+                        <a n:href="UserManagement:">Administrace</a>
+                    </li>
+                {/if}
+                <li><a href="#">Tréninky</a></li>
+                <li><a href="#">Semináře</a></li> 
+                <li><a n:href="Competition:">Soutěže</a></li> 
+                    {/block}
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {block menu-right}
+                <li><a href="#"><span class="glyphicon glyphicon-user"></span> Profil</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-cog"></span> Nastavení</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Odhlásit se</a></li>
+                {/block}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+{/block}

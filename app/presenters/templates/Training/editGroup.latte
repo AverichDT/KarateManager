@@ -1,0 +1,20 @@
+{* Edit training group template *}
+{block sidebar-content}
+<ul class="nav nav-pills nav-stacked">
+    <li class="section-name">
+        Tréninky
+    </li>
+    <li><a n:href="Training:">Přehled</a></li>
+        {if $user->isAllowed('Training', 'manage')}
+        <li><a n:href="Training:create">Přidat</a></li>
+        <li class="section-name">Tréinkové skupiny</li>
+        <li><a n:href="Training:groups">Přehled</a></li>
+        <li><a n:href="Training:createGroup">Přidat</a></li>
+        <li class="active"><a n:href="Training:editGroup">Upravit</a></li>
+        {/if}
+</ul>
+{/block}
+
+{block content}
+<h2>{$group->name}</h2>
+{control editTrainingGroupForm}
